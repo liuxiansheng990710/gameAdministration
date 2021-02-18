@@ -2,6 +2,8 @@ package com.GameAdministration.core.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,8 +16,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.GameAdministration.Auxiliary.Message;
+import com.GameAdministration.Auxiliary.Response;
 import com.GameAdministration.Exception.ApplicationException;
-import com.GameAdministration.Exception.GlobalErrorCode;
+import com.GameAdministration.Exception.GlobalCode;
 import com.GameAdministration.util.MD5Util;
 
 
@@ -47,15 +51,25 @@ public class Test {
 	
 	@RequestMapping(value = "/login")
 	public Object login(){
+		Response<Map<String, Object>> response = new Response<Map<String,Object>>();
+		Message message = new Message();
+		Map<String,Object> map = new HashMap<String, Object>();
 		String sql = "select password from userinfo where uid = 10006";
 		String object = userJdbcTemplate.queryForObject(sql, String.class);
-		return MD5Util.getBase64Decoder(object);
+		map.put("data", MD5Util.getBase64Decoder(object));
+		message.setCode(GlobalCode.SUCCESSFUL.getCode());
+		message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+		message.setContext("uid为10006的用户信息");
+		response.setIsOk(true);
+		response.setData(map);
+		response.setMessage(message);
+		return response;
 	}
 	
 	@RequestMapping(value = "/redisTest")
 	public Boolean redisTest(){
 		ArrayList<Object> arrayList = new ArrayList<Object>();
-		arrayList.add("亚鹏的小可爱1号");
+		arrayList.add("亚鹏的小可爱2号");
 		arrayList.add("密码");
 		arrayList.add(21);
 		Boolean isok = false;
@@ -66,12 +80,12 @@ public class Test {
 	
 	@RequestMapping(value = "/exceptionTest")
 	public Object exceptionTest(){
-		throw new ApplicationException(GlobalErrorCode.SUCCESS);
+		throw new ApplicationException(GlobalCode.SIGN_SUCCESS);
 	}
 
 	@RequestMapping(value = "/md5Test")
 	public String md5Test(){
-		String str = "liu1069823632";
+		String str = "456789wqesad";
 		String base64Encoder = MD5Util.createBase64Encoder(str);
 		System.out.println(base64Encoder);
 		String base64Decoder = MD5Util.getBase64Decoder(base64Encoder);

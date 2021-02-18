@@ -11,8 +11,9 @@ import org.springframework.util.DigestUtils;
 
 import sun.misc.BASE64Encoder;
 
+import com.GameAdministration.Auxiliary.Constants;
 import com.GameAdministration.Exception.ApplicationException;
-import com.GameAdministration.Exception.GlobalErrorCode;
+import com.GameAdministration.Exception.GlobalCode;
 
 /**
  * 
@@ -58,19 +59,19 @@ public class MD5Util {
 			BASE64Encoder encoder = new BASE64Encoder();
 			return encoder.encode(md5);
 		}catch(NoSuchAlgorithmException e){
-			throw new ApplicationException(GlobalErrorCode.CREATE_TOKEN_ERROR);
+			throw new ApplicationException(GlobalCode.CREATE_TOKEN_ERROR);
 		}
 	}
 	
 	/**
 	 * @param token
-	 * @return 将原始字符串token进行base64加密
+	 * @return 对字符串token进行base64加密
 	 */
 	public static String createBase64Encoder(String token){
 		if(StringUtils.isBlank(token)){
 			return null;
 		}
-		return Base64.getEncoder().encodeToString(token.getBytes(StandardCharsets.UTF_8))+ConstantsUtil.salt;
+		return Base64.getEncoder().encodeToString(token.getBytes(StandardCharsets.UTF_8))+Constants.salt;
 	}
 	
 	/**
@@ -81,7 +82,7 @@ public class MD5Util {
 		if(StringUtils.isBlank(token)){
 			return null;
 		}
-		String newToken = token.replace(ConstantsUtil.salt, "");
+		String newToken = token.replace(Constants.salt, "");
 		return new String(Base64.getDecoder().decode(newToken),StandardCharsets.UTF_8);
 	}
 }
