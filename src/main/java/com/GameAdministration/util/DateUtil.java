@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.GameAdministration.Exception.ApplicationException;
-import com.GameAdministration.Exception.GlobalErrorCode;
+import com.GameAdministration.Exception.GlobalCode;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,7 +27,7 @@ public class DateUtil {
 	 */
 	public static int getCurrentTimeDiff(String format,String Date){
 		if(Date == null){
-			throw new ApplicationException(GlobalErrorCode.TIME_ISEMPTY);
+			throw new ApplicationException(GlobalCode.TIME_ISEMPTY);
 		}
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
 		Date date = null;
@@ -53,7 +53,7 @@ public class DateUtil {
 	 */
 	public static int getDateDiffDays(Date beginDate,Date endDate){
 		if(beginDate == null || endDate == null){
-			throw new ApplicationException(GlobalErrorCode.TIME_ISEMPTY);
+			throw new ApplicationException(GlobalCode.TIME_ISEMPTY);
 		}
 		long diff= (endDate.getTime()-beginDate.getTime())/(60*60*24*1000);
 		int days = new Long(diff).intValue();
@@ -67,7 +67,7 @@ public class DateUtil {
 	 */
 	public static long getDateDiffLong(Date beginDate,Date endDate){
 		if(beginDate == null || endDate == null){
-			throw new ApplicationException(GlobalErrorCode.TIME_ISEMPTY);
+			throw new ApplicationException(GlobalCode.TIME_ISEMPTY);
 		}
 		long time1 = beginDate.getTime();
 		long time2 = endDate.getTime();

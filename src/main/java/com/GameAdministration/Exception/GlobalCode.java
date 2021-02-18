@@ -1,12 +1,18 @@
 package com.GameAdministration.Exception;
 
-public enum GlobalErrorCode implements ErrorCode{
-	
+public enum GlobalCode implements ErrorCode{
 	
 	/*
 	 * 登录状态提示
 	 * */
-	SUCCESS("000000","成功"),
+	SIGN_SUCCESS("200","登录成功"),
+	SIGN_FAILED("400","登陆失败"),
+	
+	/*
+	 * 执行状态提示
+	 * */
+	SUCCESSFUL("10001","执行成功"),
+	FAILED("10002","执行失败"),
 	
 	/*
 	 * 时间异常提示
@@ -23,7 +29,7 @@ public enum GlobalErrorCode implements ErrorCode{
 	private final String code;
 	private final String message;
 	
-	GlobalErrorCode(String code,String message){
+	GlobalCode(String code,String message){
 		this.code = code;
 		this.message = message;
 	}
@@ -35,8 +41,7 @@ public enum GlobalErrorCode implements ErrorCode{
 
 	@Override
 	public String getMessage() {
-		return this.message;
+		return message;
 	}
-	
-	
+
 }

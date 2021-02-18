@@ -1,4 +1,4 @@
-package com.GameAdministration.util;
+package com.GameAdministration.Auxiliary;
 
 /**
  * 
@@ -8,11 +8,11 @@ package com.GameAdministration.util;
  * @date:     2021年1月29日下午3:09:02
  * 
  */
-public class ConstantsUtil {
+public class Constants {
 	
 	public static String salt = "21";
 
-	private ConstantsUtil(){
+	private Constants(){
 		
 	}
 }
