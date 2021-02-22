@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.GameAdministration.Exception.ApplicationException;
-import com.GameAdministration.Exception.GlobalCode;
+import com.GameAdministration.exception.ApplicationException;
+import com.GameAdministration.exception.GlobalCode;
 
 import lombok.extern.slf4j.Slf4j;
 
