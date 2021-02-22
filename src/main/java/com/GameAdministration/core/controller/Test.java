@@ -16,10 +16,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GameAdministration.Auxiliary.Message;
-import com.GameAdministration.Auxiliary.Response;
-import com.GameAdministration.Exception.ApplicationException;
-import com.GameAdministration.Exception.GlobalCode;
+import com.GameAdministration.auxiliary.ResultMessage;
+import com.GameAdministration.exception.ApplicationException;
+import com.GameAdministration.exception.GlobalCode;
 import com.GameAdministration.util.MD5Util;
 
 
@@ -51,19 +50,14 @@ public class Test {
 	
 	@RequestMapping(value = "/login")
 	public Object login(){
-		Response<Map<String, Object>> response = new Response<Map<String,Object>>();
-		Message message = new Message();
+		ResultMessage message = new ResultMessage();
 		Map<String,Object> map = new HashMap<String, Object>();
 		String sql = "select password from userinfo where uid = 10006";
 		String object = userJdbcTemplate.queryForObject(sql, String.class);
 		map.put("data", MD5Util.getBase64Decoder(object));
-		message.setCode(GlobalCode.SUCCESSFUL.getCode());
 		message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
 		message.setContext("uid为10006的用户信息");
-		response.setIsOk(true);
-		response.setData(map);
-		response.setMessage(message);
-		return response;
+		return message;
 	}
 	
 	@RequestMapping(value = "/redisTest")
