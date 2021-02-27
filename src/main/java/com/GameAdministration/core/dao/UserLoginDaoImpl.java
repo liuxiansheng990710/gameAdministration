@@ -21,12 +21,5 @@ public class UserLoginDaoImpl implements UserLoginDao{
 		List<Map<String,Object>> list = userJdbcTemplate.queryForList(sql,userName);
 		return list;
 	}
-
-	@Override
-	public int registerUserLoginInfo(String userName, String password) {
-		String sql = "insert into userinfo (username,password) values(?,?)";
-		int update = userJdbcTemplate.update(sql,userName,password);
-		return update;
-	}
 	
 }

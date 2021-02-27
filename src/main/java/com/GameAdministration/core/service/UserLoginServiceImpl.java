@@ -29,14 +29,4 @@ public class UserLoginServiceImpl implements UserLoginService{
 		return Constants.noInformation;
 	}
 
-	@Override
-	public boolean registerUserLoginInfo(String userName, String password) {
-		String md5Password = MD5Util.createBase64Encoder(password);
-		int registerUserLoginInfo = userLoginDao.registerUserLoginInfo(userName, md5Password);
-		if(registerUserLoginInfo != 0){
-			return true;
-		}
-		return false;
-	}
-
 }
