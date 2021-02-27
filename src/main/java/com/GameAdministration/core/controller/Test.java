@@ -3,6 +3,7 @@ package com.GameAdministration.core.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +43,10 @@ public class Test {
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
 	
-	@RequestMapping(value = "/index")
-	public Object index(){
-		String sql = "select name from game where uid = 1";
-		return gameJdbcTemplate.queryForObject(sql, String.class);
+	@RequestMapping(value = "/game")
+	public List<Map<String,Object>> index(){
+		String sql = "select * from gameinfo ";
+		return gameJdbcTemplate.queryForList(sql);
 	}
 	
 	@RequestMapping(value = "/login")
