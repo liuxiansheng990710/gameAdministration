@@ -22,7 +22,7 @@ public interface GameUserService {
 	public List<Map<String,Object>> getUsersByUidOrName(String str);
 	
 	//获取所有黑名单用户
-	public List<Map<String,Object>> getBlankList();
+	public Object getBlankList();
 	
 	//注销用户
 	public boolean cancellUser(BigInteger uid);
@@ -32,5 +32,8 @@ public interface GameUserService {
 	
 	//根据uid或者用户名获取黑名单用户信息
 	public List<Map<String,Object>> getBlankListByUidOrName(String str);
+	
+	//刷新黑名单缓存
+	public boolean refreshBlackList();
 	
 }

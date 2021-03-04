@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GameAdministration.Auxiliary.Constants;
-import com.GameAdministration.Auxiliary.ResultMessage;
+import com.GameAdministration.auxiliary.Constants;
+import com.GameAdministration.auxiliary.ResultMessage;
 import com.GameAdministration.baseinfo.UserInfo;
 import com.GameAdministration.core.service.UserLoginService;
-import com.GameAdministration.Exception.ApplicationException;
-import com.GameAdministration.Exception.GlobalCode;
+import com.GameAdministration.exception.ApplicationException;
+import com.GameAdministration.exception.GlobalCode;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -29,6 +29,7 @@ public class UserLoginController {
 	public ResultMessage<Map<String,Object>> login(@RequestBody UserInfo userInfo , HttpSession session){
 		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
 		String checkUserLogin = userLoginService.checkUserLogin(userInfo.getUsername());
+		boolean checkState = userLoginService.checkState(userInfo.getUsername());
 		boolean equals = userInfo.getPassword().equals(checkUserLogin);
 		try {
 			if(StringUtils.isBlank(userInfo.getUsername()) || StringUtils.isBlank(userInfo.getPassword())){
@@ -45,6 +46,12 @@ public class UserLoginController {
 				message.setOk(false);
 				message.setCode(GlobalCode.PASSWORD_WRONG.getCode());
 				message.setCodeMessage(GlobalCode.PASSWORD_WRONG.getMessage());
+				return message;
+			}
+			else if(checkState != true){
+				message.setOk(false);
+				message.setCode(GlobalCode.STATE_ERROE.getCode());
+				message.setCodeMessage(GlobalCode.STATE_ERROE.getMessage());
 				return message;
 			}
 			else if(!checkUserLogin.equals(Constants.noInformation) && equals != false){

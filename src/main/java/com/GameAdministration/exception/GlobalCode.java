@@ -1,4 +1,4 @@
-package com.GameAdministration.Exception;
+package com.GameAdministration.exception;
 
 public enum GlobalCode implements ErrorCode{
 	
@@ -10,12 +10,13 @@ public enum GlobalCode implements ErrorCode{
 	SIGN_ERROR(500,"登录异常,请重新登录"),
 	ACCOUNT_NONTHING(600,"账号不存在，请先注册"),
 	PASSWORD_WRONG(700,"密码错误，请重新输入"),
+	STATE_ERROE(100,"您的账号尚未权限登录，请联系吟轩为您审核"),
 	
 	/*
 	 * 注册状态提示
 	 * */
 	REGISTER_ERROR(300,"注册异常"),
-	REGISTER_SUCESS(800,"注册成功"),
+	REGISTER_SUCESS(800,"注册成功，请联系吟轩为您审核"),
 	ACCONUT_EXISTS(900,"账号已经存在，无需重复注册"),
 	
 	/*

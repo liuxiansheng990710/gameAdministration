@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,42 +12,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.GameAdministration.auxiliary.ResultMessage;
-import com.GameAdministration.core.service.GameUserService;
+import com.GameAdministration.core.service.OrderService;
 import com.GameAdministration.exception.GlobalCode;
-
 
 @RestController
 @RequestMapping(value = "/api")
-public class GameUserController {
+public class OrderController {
 	
 	@Autowired
-	GameUserService gameUserService;
+	OrderService orderService;
 	
-	@GetMapping(value = "/allGameUsers")
-	public ResultMessage<Map<String,Object>> allGameUsers(){
+	@GetMapping(value = "/allOrders")
+	public ResultMessage<Map<String,Object>> allOrders(){
 		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String, Object>();
-		List<Map<String,Object>> allGameUsers = gameUserService.allGameUsers();
-		if(allGameUsers != null && allGameUsers.size()>0){
-			map.put("data", allGameUsers);
+		List<Map<String,Object>> allOrders = orderService.allOrders();
+		if(allOrders != null &&allOrders.size() > 0){
+			map.put("data", allOrders);
 			message.setOk(true);
-			message.setCode(GlobalCode.SUCCESSFUL.getCode());
-			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
 			message.setData(map);
-			return message;
-		}
-		message.setOk(false);
-		message.setCode(GlobalCode.FAILED.getCode());
-		message.setCodeMessage(GlobalCode.FAILED.getMessage());
-		return message;
-	}
-	
-	@PostMapping(value = "/balanceRecharge")
-	public ResultMessage<Map<String,Object>> balanceRecharge(BigInteger uid){
-		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
-		boolean balanceRecharge = gameUserService.balanceRecharge(uid);
-		if(balanceRecharge != false){
-			message.setOk(true);
 			message.setCode(GlobalCode.SUCCESSFUL.getCode());
 			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
 			return message;
@@ -59,72 +41,51 @@ public class GameUserController {
 		return message;
 	}
 	
-	@PostMapping(value = "/addvip")
-	public ResultMessage<Map<String,Object>> addVip(BigInteger uid){
-		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
-		boolean addVip = gameUserService.addVip(uid);
-		if(addVip != false){
-			message.setOk(addVip);
-			message.setCode(GlobalCode.SUCCESSFUL.getCode());
-			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			return message;
-		}
-		message.setOk(addVip);
-		message.setCode(GlobalCode.FAILED.getCode());
-		message.setCodeMessage(GlobalCode.FAILED.getMessage());
-		return message;
-	}
-	
-	@PostMapping(value = "/updateState")
-	public ResultMessage<Map<String,Object>> updateState(BigInteger uid){
-		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
-		boolean updateState = gameUserService.updateState(uid);
-		if(updateState != false){
-			message.setOk(updateState);
-			message.setCode(GlobalCode.SUCCESSFUL.getCode());
-			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			return message;
-		}
-		message.setOk(updateState);
-		message.setCode(GlobalCode.FAILED.getCode());
-		message.setCodeMessage(GlobalCode.FAILED.getMessage());
-		return message;
-	}
-	
-	@GetMapping(value = "/findUsersByUidOrName")
-	public ResultMessage<Map<String,Object>> findUsersByUidOrName(String str){
+	@PostMapping(value = "/offOrder")
+	public ResultMessage<Map<String,Object>> offOrder(BigInteger uid){
 		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String, Object>();
-		if(StringUtils.isBlank(str)){
-			ResultMessage<Map<String,Object>> message2 = allGameUsers();
-			return message2;
-		}
-		List<Map<String,Object>> usersByUidOrName = gameUserService.getUsersByUidOrName(str);
-		if(usersByUidOrName != null && usersByUidOrName.size()>0){
-			map.put("data", usersByUidOrName);
-			message.setOk(true);
+		boolean deleteOrder = orderService.deleteOrder(uid);
+		if(deleteOrder != false ){
+			message.setOk(deleteOrder);
+			message.setData(map);
 			message.setCode(GlobalCode.SUCCESSFUL.getCode());
 			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			message.setData(map);
 			return message;
 		}
-		message.setOk(false);
+		message.setOk(deleteOrder);
 		message.setCode(GlobalCode.FAILED.getCode());
 		message.setCodeMessage(GlobalCode.FAILED.getMessage());
 		return message;
 	}
-
-	@GetMapping(value = "/getBlankList")
-	public ResultMessage<Map<String,Object>> getBlankList(){
+	
+	@PostMapping(value = "/timeOrder")
+	public ResultMessage<Map<String,Object>> timeOrder(BigInteger uid){
+		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
+		boolean timeOrder = orderService.timeOrder(uid);
+		if(timeOrder != false ){
+			message.setOk(timeOrder);
+			message.setCode(GlobalCode.SUCCESSFUL.getCode());
+			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+			return message;
+		}
+		message.setOk(timeOrder);
+		message.setCode(GlobalCode.FAILED.getCode());
+		message.setCodeMessage(GlobalCode.FAILED.getMessage());
+		return message;
+	}
+	
+	@GetMapping(value = "/getOrder")
+	public ResultMessage<Map<String,Object>> getOrder(BigInteger str){
 		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String, Object>();
-		Object blankList = gameUserService.getBlankList();
-		if(blankList != null ){
-			map.put("data", blankList);
+		List<Map<String,Object>> ordersByThing = orderService.getOrdersByThing(str);
+		if(ordersByThing != null && ordersByThing.size()>0 ){
+			map.put("data", ordersByThing);
 			message.setOk(true);
+			message.setData(map);
 			message.setCode(GlobalCode.SUCCESSFUL.getCode());
 			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			message.setData(map);
 			return message;
 		}
 		message.setOk(false);
@@ -133,76 +94,73 @@ public class GameUserController {
 		return message;
 	}
 	
-	@PostMapping(value = "/cancellUser")
-	public ResultMessage<Map<String,Object>> cancellUser(BigInteger uid){
-		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
-		boolean cancellUser = gameUserService.cancellUser(uid);
-		if(cancellUser != false){
-			message.setOk(cancellUser);
-			message.setCode(GlobalCode.SUCCESSFUL.getCode());
-			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			return message;
-		}
-		message.setOk(cancellUser);
-		message.setCode(GlobalCode.FAILED.getCode());
-		message.setCodeMessage(GlobalCode.FAILED.getMessage());
-		return message;
-	}
-	
-	@PostMapping(value = "/lifitUser")
-	public ResultMessage<Map<String,Object>> lifitUser(BigInteger uid){
-		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
-		boolean lifitUser = gameUserService.lifitUser(uid);
-		if(lifitUser != false){
-			message.setOk(lifitUser);
-			message.setCode(GlobalCode.SUCCESSFUL.getCode());
-			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			return message;
-		}
-		message.setOk(lifitUser);
-		message.setCode(GlobalCode.FAILED.getCode());
-		message.setCodeMessage(GlobalCode.FAILED.getMessage());
-		return message;
-	}
-	
-	@GetMapping(value = "/findBlankListByUidOrName")
-	public ResultMessage<Map<String,Object>> findBlankListByUidOrName(String str){
+	@GetMapping(value = "/allPaidOrders")
+	public ResultMessage<Map<String,Object>> allPaidOrders(){
 		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
 		Map<String,Object> map = new HashMap<String, Object>();
-		if(StringUtils.isBlank(str)){
-			ResultMessage<Map<String,Object>> message2 = getBlankList();
-			return message2;
-		}
-		List<Map<String,Object>> usersByUidOrName = gameUserService.getBlankListByUidOrName(str);
-		if(usersByUidOrName != null && usersByUidOrName.size()>0){
-			map.put("data", usersByUidOrName);
+		List<Map<String,Object>> allPaidOrders = orderService.allPaidOrders();
+		if(allPaidOrders != null && allPaidOrders.size()>0 ){
+			map.put("data", allPaidOrders);
 			message.setOk(true);
+			message.setData(map);
 			message.setCode(GlobalCode.SUCCESSFUL.getCode());
 			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
-			message.setData(map);
 			return message;
 		}
-		
 		message.setOk(false);
 		message.setCode(GlobalCode.FAILED.getCode());
 		message.setCodeMessage(GlobalCode.FAILED.getMessage());
 		return message;
 	}
 	
-	@PostMapping(value = "/refreshBlackList")
-	public ResultMessage<Map<String,Object>> refreshBlackList(){
+	@PostMapping(value = "/backOrder")
+	public ResultMessage<Map<String,Object>> backOrder(BigInteger uid){
 		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
-		boolean refreshBlackList = gameUserService.refreshBlackList();
-		if(refreshBlackList != false){
-			message.setOk(refreshBlackList);
+		boolean backOrder = orderService.backOrder(uid);
+		if(backOrder != false ){
+			message.setOk(backOrder);
 			message.setCode(GlobalCode.SUCCESSFUL.getCode());
 			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
 			return message;
 		}
-		message.setOk(refreshBlackList);
+		message.setOk(backOrder);
 		message.setCode(GlobalCode.FAILED.getCode());
 		message.setCodeMessage(GlobalCode.FAILED.getMessage());
 		return message;
 	}
 	
+	@PostMapping(value = "/cancelOrder")
+	public ResultMessage<Map<String,Object>> cancelOrder(BigInteger uid){
+		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
+		boolean cancelOrder = orderService.cancelOrder(uid);
+		if(cancelOrder != false ){
+			message.setOk(cancelOrder);
+			message.setCode(GlobalCode.SUCCESSFUL.getCode());
+			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+			return message;
+		}
+		message.setOk(cancelOrder);
+		message.setCode(GlobalCode.FAILED.getCode());
+		message.setCodeMessage(GlobalCode.FAILED.getMessage());
+		return message;
+	}
+	
+	@GetMapping(value = "/getPaidOrder")
+	public ResultMessage<Map<String,Object>> getPaidOrder(BigInteger str){
+		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
+		Map<String,Object> map = new HashMap<String, Object>();
+		List<Map<String,Object>> ordersByThing = orderService.getPaidOrdersByThing(str);
+		if(ordersByThing != null && ordersByThing.size()>0 ){
+			map.put("data", ordersByThing);
+			message.setOk(true);
+			message.setData(map);
+			message.setCode(GlobalCode.SUCCESSFUL.getCode());
+			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+			return message;
+		}
+		message.setOk(false);
+		message.setCode(GlobalCode.FAILED.getCode());
+		message.setCodeMessage(GlobalCode.FAILED.getMessage());
+		return message;
+	}
 }

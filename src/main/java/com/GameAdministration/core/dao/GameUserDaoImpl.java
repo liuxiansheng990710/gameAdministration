@@ -15,7 +15,7 @@ public class GameUserDaoImpl implements GameUserDao{
 	@Autowired
 	@Qualifier(value = "gameJdbcTemplate")
 	private JdbcTemplate gameJdbcTemplate;
-
+	
 	@Override
 	public List<Map<String, Object>> allGameUsers() {
 		String sql = "select * from gameuser where state = 1";

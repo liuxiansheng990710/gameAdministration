@@ -1,13 +1,17 @@
 package com.GameAdministration.core.service;
 
 import java.math.BigInteger;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.GameAdministration.auxiliary.Constants;
 import com.GameAdministration.core.dao.GameUserDao;
 
 @Service
@@ -16,6 +20,10 @@ public class GameUserServiceImpl implements GameUserService{
 	
 	@Autowired
 	GameUserDao gameUserDao;
+	
+	@Autowired
+	@Qualifier(value = "myRedisTemplate")
+	private RedisTemplate<String, Object> myRedisTemplate;
 
 	@Override
 	public List<Map<String, Object>> allGameUsers() {
@@ -62,9 +70,16 @@ public class GameUserServiceImpl implements GameUserService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getBlankList() {
+	public Object getBlankList() {
+		Object object = myRedisTemplate.opsForHash().get(Constants.blankListKey, "data");
+		if(object != null){
+			return object;
+		}
 		List<Map<String,Object>> blankList = gameUserDao.getBlankList();
-		return blankList;
+		if(blankList!=null&&blankList.size()>0){
+			return blankList;
+		}
+		return null;
 	}
 
 	@Override
@@ -93,6 +108,16 @@ public class GameUserServiceImpl implements GameUserService{
 		}
 		List<Map<String,Object>> usersById = gameUserDao.getBlankListById(BigInteger.valueOf(Long.parseLong(str)));
 		return usersById;
+	}
+
+	@Override
+	public boolean refreshBlackList() {
+		List<Map<String,Object>> blankList = gameUserDao.getBlankList();
+		myRedisTemplate.delete(Constants.blankListKey);
+		HashMap<String,Object> map2 = new HashMap<String,Object>();
+		map2.putIfAbsent("data", blankList);
+		myRedisTemplate.opsForHash().putAll(Constants.blankListKey, map2);
+		return true;
 	}
 	
 }
