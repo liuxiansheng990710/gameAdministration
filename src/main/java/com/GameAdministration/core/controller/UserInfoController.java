@@ -118,4 +118,5 @@ public class UserInfoController {
 		return message;
 	}
 	
+	
 }
