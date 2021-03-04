@@ -11,9 +11,9 @@ import org.springframework.util.DigestUtils;
 
 import sun.misc.BASE64Encoder;
 
-import com.GameAdministration.auxiliary.Constants;
-import com.GameAdministration.exception.ApplicationException;
-import com.GameAdministration.exception.GlobalCode;
+import com.GameAdministration.Auxiliary.Constants;
+import com.GameAdministration.Exception.ApplicationException;
+import com.GameAdministration.Exception.GlobalCode;
 
 /**
  * 

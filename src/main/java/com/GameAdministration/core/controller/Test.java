@@ -17,9 +17,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GameAdministration.auxiliary.ResultMessage;
-import com.GameAdministration.exception.ApplicationException;
-import com.GameAdministration.exception.GlobalCode;
+import com.GameAdministration.Auxiliary.ResultMessage;
+import com.GameAdministration.Exception.ApplicationException;
+import com.GameAdministration.Exception.GlobalCode;
 import com.GameAdministration.util.MD5Util;
 
 
