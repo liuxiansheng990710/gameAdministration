@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GameAdministration.auxiliary.ResultMessage;
+import com.GameAdministration.Auxiliary.ResultMessage;
 import com.GameAdministration.core.service.GameInfoService;
-import com.GameAdministration.exception.GlobalCode;
+import com.GameAdministration.Exception.GlobalCode;
 
 @RestController
 @RequestMapping("/api")
