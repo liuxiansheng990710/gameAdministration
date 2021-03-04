@@ -1,9 +1,13 @@
 package com.GameAdministration.core.controller;
 
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,6 +64,57 @@ public class UserInfoController {
 		message.setOk(false);
 		message.setCode(GlobalCode.UPDATE_FAILED.getCode());
 		message.setCodeMessage(GlobalCode.UPDATE_FAILED.getMessage());
+		return message;
+	}
+	
+	@GetMapping(value = "/getAllLoginExamine")
+	public ResultMessage<Map<String,Object>> getAllLoginExamine(){
+		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
+		Map<String,Object> map = new HashMap<String, Object>();
+		List<Map<String,Object>> allLoginExamine = userLoginService.getAllLoginExamine();
+		if(allLoginExamine != null && allLoginExamine.size()>0){
+			map.put("data", allLoginExamine);
+			message.setOk(true);
+			message.setData(map);
+			message.setCode(GlobalCode.SUCCESSFUL.getCode());
+			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+			return message;
+		}
+		message.setOk(false);
+		message.setCode(GlobalCode.FAILED.getCode());
+		message.setCodeMessage(GlobalCode.FAILED.getMessage());
+		return message;
+	}
+	
+	@PostMapping(value = "/loginExamine")
+	public ResultMessage<Map<String,Object>> loginExamine(BigInteger uid){
+		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
+		boolean loginExamine = userLoginService.loginExamine(uid);
+		if(loginExamine != false){
+			message.setOk(loginExamine);
+			message.setCode(GlobalCode.SUCCESSFUL.getCode());
+			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+			return message;
+		}
+		message.setOk(loginExamine);
+		message.setCode(GlobalCode.FAILED.getCode());
+		message.setCodeMessage(GlobalCode.FAILED.getMessage());
+		return message;
+	}
+	
+	@PostMapping(value = "/recall")
+	public ResultMessage<Map<String,Object>> recall(BigInteger uid){
+		ResultMessage<Map<String,Object>> message = new ResultMessage<Map<String,Object>>();
+		boolean recall = userLoginService.recall(uid);
+		if(recall != false){
+			message.setOk(recall);
+			message.setCode(GlobalCode.SUCCESSFUL.getCode());
+			message.setCodeMessage(GlobalCode.SUCCESSFUL.getMessage());
+			return message;
+		}
+		message.setOk(recall);
+		message.setCode(GlobalCode.FAILED.getCode());
+		message.setCodeMessage(GlobalCode.FAILED.getMessage());
 		return message;
 	}
 	

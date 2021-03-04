@@ -61,4 +61,41 @@ public class GameInfoDaoImpl implements GameInfoDao{
 		return list;
 	}
 
+	@Override
+	public int addProp(BigInteger uid,String prop) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("update gameuser set props = '");
+		if(prop != null){
+			sql.append(prop).append(",");
+		}
+		sql.append("飞天猪' where uid = ").append(uid);
+		int update = gameJdbcTemplate.update(sql.toString());
+		return update;
+	}
+
+	@Override
+	public int getBug(BigInteger gameId) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("select safe from gameinfo where gameId = ").append(gameId);
+		int safe = gameJdbcTemplate.queryForObject(sql.toString(), Integer.class);
+		return safe;
+	}
+
+	@Override
+	public int updateBug(BigInteger gameId, int bugGrade) {
+		String sql = "update gameinfo set safe = ? where gameId = ?";
+		int update = gameJdbcTemplate.update(sql,bugGrade,gameId);
+		return update;
+	}
+
+	@Override
+	public int reexAmine(BigInteger gameId) {
+		StringBuilder sql = new StringBuilder();
+		sql.append("update gameinfo set code = 0 where gameId = '").append(gameId).append("' ");
+		int update = gameJdbcTemplate.update(sql.toString());
+		return update;
+	}
+	
+	
+
 }

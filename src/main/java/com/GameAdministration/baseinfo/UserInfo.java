@@ -20,5 +20,6 @@ public class UserInfo {
 	private BigInteger id;
 	private String username;
 	private String password;
+	private int state;
 
 }

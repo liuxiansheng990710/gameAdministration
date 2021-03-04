@@ -12,6 +12,8 @@ public class Constants {
 	
 	public static String salt = "21";
 	public static String noInformation = "noInformation";
+	public static String baseCDK = "tademingziyeyouxia";
+	public static String blankListKey = "USER_BLANK_LIST";
 
 	private Constants(){
 		
