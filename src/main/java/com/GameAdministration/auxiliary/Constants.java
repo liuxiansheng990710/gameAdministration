@@ -1,4 +1,4 @@
-package com.GameAdministration.auxiliary;
+package com.GameAdministration.Auxiliary;
 
 /**
  * 

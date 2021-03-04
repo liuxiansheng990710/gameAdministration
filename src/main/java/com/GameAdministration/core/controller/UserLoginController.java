@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GameAdministration.auxiliary.Constants;
-import com.GameAdministration.auxiliary.ResultMessage;
+import com.GameAdministration.Auxiliary.Constants;
+import com.GameAdministration.Auxiliary.ResultMessage;
 import com.GameAdministration.baseinfo.UserInfo;
 import com.GameAdministration.core.service.UserLoginService;
-import com.GameAdministration.exception.ApplicationException;
-import com.GameAdministration.exception.GlobalCode;
+import com.GameAdministration.Exception.ApplicationException;
+import com.GameAdministration.Exception.GlobalCode;
 
 @RestController
 @RequestMapping(value = "/api")

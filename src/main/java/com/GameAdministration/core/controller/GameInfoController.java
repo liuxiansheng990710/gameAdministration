@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.GameAdministration.auxiliary.Constants;
-import com.GameAdministration.auxiliary.ResultMessage;
+import com.GameAdministration.Auxiliary.Constants;
+import com.GameAdministration.Auxiliary.ResultMessage;
 import com.GameAdministration.core.service.GameInfoService;
 import com.GameAdministration.core.service.GameUserService;
-import com.GameAdministration.exception.GlobalCode;
+import com.GameAdministration.Exception.GlobalCode;
 import com.GameAdministration.util.MD5Util;
 
 @RestController

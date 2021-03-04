@@ -1,4 +1,4 @@
-package com.GameAdministration.exception;
+package com.GameAdministration.Exception;
 
 public enum GlobalCode implements ErrorCode{
 	
